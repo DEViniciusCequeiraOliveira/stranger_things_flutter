@@ -1,12 +1,7 @@
-import 'dart:convert';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:stranger_things/models/Character.dart';
-import 'package:http/http.dart' as http;
 import 'package:stranger_things/repository/apiStrangerThings.dart';
 import 'package:stranger_things/screens/CharacterPage.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class homePage extends StatefulWidget {
   const homePage({
@@ -27,8 +22,8 @@ class _homePageState extends State<homePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                "https://upload.wikimedia.org/wikipedia/commons/3/38/Stranger_Things_logo.png",
+              Image.asset(
+                "assets/logo.png",
                 fit: BoxFit.cover,
               ),
               Padding(
@@ -69,7 +64,11 @@ class _homePageState extends State<homePage> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => CharacterPage(index: index)));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CharacterPage(index: index)));
                                 },
                                 splashColor: Colors.white10,
                                 child: ClipRRect(
@@ -100,7 +99,20 @@ class _homePageState extends State<homePage> {
                     }
 
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        color: Colors.black,
+                        child: AlertDialog(
+                          backgroundColor: Colors.black,
+                          content: Container(
+                            child: Image.network(
+                                "https://giffiles.alphacoders.com/156/15671.gif"),
+                            width: 300,
+                          ),
+                        ),
+                      ),
+                      /*child: CircularProgressIndicator(),*/
                     );
                   },
                 ),
