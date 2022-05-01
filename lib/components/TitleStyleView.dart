@@ -10,7 +10,7 @@ class TitleStyleView extends StatelessWidget {
     final date = characteristic.toString();
     return Text(
       date,
-      style: TextStyle(fontSize: 38, color: Colors.red),
+      style: TextStyle(fontSize: 36, color: Colors.red),
     );
   }
 }

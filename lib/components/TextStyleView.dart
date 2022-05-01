@@ -3,9 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TextStyleView extends StatelessWidget {
   const TextStyleView(
-      {Key? key, required this.characteristic, this.style, this.icon})
+      {Key? key, required this.characteristic, this.icon})
       : super(key: key);
-  final style;
+
   final characteristic;
   final FaIcon? icon;
   @override
@@ -18,7 +18,7 @@ class TextStyleView extends StatelessWidget {
             date.substring(
               1,
               date.length - 1,
-            ),
+            ), style: TextStyle(fontSize: 14),
           );
 
     /* return date.contains("unknown")
@@ -40,3 +40,11 @@ class TextStyleView extends StatelessWidget {
           ); */
   }
 }
+
+/*
+icon: FaIcon(
+                                      FontAwesomeIcons.briefcase,
+                                      color: Colors.red,
+                                      size: 18,
+                                    ),
+*/

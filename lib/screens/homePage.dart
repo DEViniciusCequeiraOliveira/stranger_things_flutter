@@ -35,7 +35,7 @@ class _homePageState extends State<homePage> {
               ),
               Container(
                 color: Colors.white,
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.39,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -45,7 +45,7 @@ class _homePageState extends State<homePage> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.3,
+                height: MediaQuery.of(context).size.height * 0.4,
                 child: FutureBuilder(
                   future: apiStrangerThings().fetch(),
                   builder: (BuildContext context,
@@ -57,6 +57,11 @@ class _homePageState extends State<homePage> {
                     }
                     if (snapshot.hasData) {
                       return ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            width: 16,
+                          );
+                        },
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
@@ -76,8 +81,8 @@ class _homePageState extends State<homePage> {
                                   child: Image.network(
                                     snapshot.data![index].photo.toString(),
                                     fit: BoxFit.cover,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
+                                    //width: MediaQuery.of(context).size.width * 0.25,
+                                    height: MediaQuery.of(context).size.height * 0.29,
                                   ),
                                 ),
                               ),
@@ -88,11 +93,6 @@ class _homePageState extends State<homePage> {
                                 ),
                               )
                             ],
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(
-                            width: 10,
                           );
                         },
                       );
