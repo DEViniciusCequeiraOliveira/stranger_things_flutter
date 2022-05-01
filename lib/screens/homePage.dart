@@ -45,6 +45,7 @@ class _homePageState extends State<homePage> {
                 ),
               ),
               Container(
+                
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: FutureBuilder(
                   future: apiStrangerThings().fetch(),
@@ -81,7 +82,7 @@ class _homePageState extends State<homePage> {
                                   child: Image.network(
                                     snapshot.data![index].photo.toString(),
                                     fit: BoxFit.cover,
-                                    //width: MediaQuery.of(context).size.width * 0.25,
+
                                     height: MediaQuery.of(context).size.height * 0.29,
                                   ),
                                 ),
@@ -112,7 +113,6 @@ class _homePageState extends State<homePage> {
                           ),
                         ),
                       ),
-                      /*child: CircularProgressIndicator(),*/
                     );
                   },
                 ),

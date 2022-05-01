@@ -22,104 +22,129 @@ class CharecterPageView extends StatelessWidget {
     return Container(
       color: Colors.black,
       width: MediaQuery.of(context).size.width,
-      child: Stack(
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Image.network(
-              snapshot.data![index].photo.toString(),
-              alignment: Alignment.topCenter,
-              fit: BoxFit.cover,
-              height: MediaQuery.of(context).size.height * 0.60,
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Colors.black,
+            expandedHeight: MediaQuery.of(context).size.height * 0.55,
+            pinned: false,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Image.network(
+                snapshot.data![index].photo.toString(),
+                alignment: Alignment.topCenter,
+                fit: BoxFit.cover,
+                height: MediaQuery.of(context).size.height * 0.80,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(child: Image.asset("assets/splash.gif"));
+                },
+              ),
             ),
           ),
           Positioned(
-            bottom: 0,
-            height: MediaQuery.of(context).size.height * 0.40,
-            child: SingleChildScrollView(
+            height: MediaQuery.of(context).size.height * 0.50,
+            child: SliverToBoxAdapter(
               child: Container(
                 width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(12.0),
                 decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(30)),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TitleStyleView(
-                        characteristic: contents.name,
-                      ),
-                      SubTitleStyleView(characteristic: contents.aliases),
-                      DefaultTabController(
-                          length: 3,
-                          child: Column(
-                            children: [
-                              Container(
-                                child: TabBar(
-                                  labelColor: Colors.red,
-                                  indicatorColor: Colors.red,
-                                  unselectedLabelColor: Colors.white,
-                                  tabs: [
-                                    Tab(text: 'Informações'),
-                                    Tab(text: 'Amigos'),
-                                    Tab(text: 'Episodios'),
-                                  ],
-                                ),
+                  color: Colors.black,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TitleStyleView(
+                      characteristic: contents.name,
+                    ),
+                    SubTitleStyleView(characteristic: contents.aliases),
+                    DefaultTabController(
+                      length: 3,
+                      child: Column(
+                        children: [
+                          Container(
+                            child: TabBar(
+                              labelColor: Colors.red,
+                              indicatorColor: Colors.red,
+                              unselectedLabelColor: Colors.white,
+                              tabs: [
+                                Tab(text: 'Informações'),
+                                Tab(text: 'Amigos'),
+                                Tab(text: 'Episodios'),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.38,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top:
+                                    BorderSide(color: Colors.white, width: 0.5),
                               ),
-                              Container(
-                                height: MediaQuery.of(context).size.height * 0.14,
-                                decoration: BoxDecoration(
-                                  border: Border(
-
-                                    top: BorderSide(
-                                        color: Colors.white, width: 0.5),
-                                  ),
-                                ),
-                                child: TabBarView(
+                            ),
+                            child: TabBarView(
+                              children: [
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Column(
-                                      children: [
-                                        TextStyleView(
-                                            characteristic:
-                                                contents.occupation),
-                                        TextStyleView(
-                                            characteristic:
-                                                contents.affiliation),
-                                        TextStyleView(
-                                            characteristic: contents.residence),
-                                        TextStyleSimpleView(
-                                            characteristic: contents.status),
-                                      ],
+                                    TextStyleView(
+                                        characteristic: contents.occupation),
+                                    SizedBox(
+                                      height: 10,
                                     ),
-                                    Column(
-                                      children: [
-                                        TextStyleView(
-                                            characteristic:
-                                                contents.otherRelations),
-                                      ],
+                                    TextStyleView(
+                                        characteristic: contents.affiliation),
+                                    SizedBox(
+                                      height: 10,
                                     ),
-                                    Column(
-                                      children: [
-                                        TextStyleView(
-                                            characteristic:
-                                                contents.appearsInEpisodes),
-                                        TextStyleSimpleView(
-                                            characteristic:
-                                                contents.portrayedBy),
-                                      ],
+                                    TextStyleView(
+                                        characteristic: contents.residence),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    TextStyleSimpleView(
+                                        characteristic: contents.status),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: TextStyleView(
+                                          characteristic:
+                                              contents.otherRelations),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
-                          ))
-                    ],
-                  ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    TextStyleView(
+                                        characteristic:
+                                            contents.appearsInEpisodes),
+                                    SizedBox(
+                                      height: 22,
+                                    ),
+                                    TextStyleSimpleView(
+                                        characteristic: contents.portrayedBy),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
