@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stranger_things/models/Character.dart';
 import 'package:stranger_things/repository/apiStrangerThings.dart';
+import 'package:stranger_things/repository/apiYoutube.dart';
 import 'package:stranger_things/screens/CharacterPage.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class homePage extends StatefulWidget {
   const homePage({
@@ -34,8 +36,66 @@ class _homePageState extends State<homePage> {
                 ),
               ),
               Container(
-                color: Colors.white,
-                height: MediaQuery.of(context).size.height * 0.39,
+              height: MediaQuery.of(context).size.height * 0.4,
+
+                child: FutureBuilder(
+                  future: apiYoutube().fetch(),
+                  builder: (context, AsyncSnapshot<List<Map>> snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text("ERRO"),
+                      );
+                    }
+                    if (snapshot.hasData) {
+                      return ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return SizedBox(
+                            width: 16,
+                          );
+                        },
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              Image.network(snapshot.data![index]["thumbnail"].toString(),
+                                fit: BoxFit.cover,
+                                //height: MediaQuery.of(context).size.height * 0.3,
+                                width: MediaQuery.of(context).size.width * 0.92
+                              ),
+                              /*Image.network(
+                                YoutubePlayer.getThumbnail(
+                                  videoId: (snapshot.data![index]["idVideo"]),
+                                ),
+                                fit: BoxFit.cover,
+                                width:
+                                    MediaQuery.of(context).size.width * 0.8,
+                              ), */
+                              Text(
+                                snapshot.data![index]["titleVideo"],
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                    return Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        color: Colors.black,
+                        child: AlertDialog(
+                          backgroundColor: Colors.black,
+                          content: Container(
+                            child: Image.network(
+                                "https://giffiles.alphacoders.com/156/15671.gif"),
+                            width: 300,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -45,7 +105,6 @@ class _homePageState extends State<homePage> {
                 ),
               ),
               Container(
-                
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: FutureBuilder(
                   future: apiStrangerThings().fetch(),
@@ -82,8 +141,8 @@ class _homePageState extends State<homePage> {
                                   child: Image.network(
                                     snapshot.data![index].photo.toString(),
                                     fit: BoxFit.cover,
-
-                                    height: MediaQuery.of(context).size.height * 0.29,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.29,
                                   ),
                                 ),
                               ),
