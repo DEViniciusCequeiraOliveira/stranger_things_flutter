@@ -3,6 +3,7 @@ import 'package:stranger_things/models/Character.dart';
 import 'package:stranger_things/repository/apiStrangerThings.dart';
 import 'package:stranger_things/repository/apiYoutube.dart';
 import 'package:stranger_things/screens/CharacterPage.dart';
+import 'package:stranger_things/screens/videoPage.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class homePage extends StatefulWidget {
@@ -36,8 +37,7 @@ class _homePageState extends State<homePage> {
                 ),
               ),
               Container(
-              height: MediaQuery.of(context).size.height * 0.4,
-
+                height: MediaQuery.of(context).size.height * 0.4,
                 child: FutureBuilder(
                   future: apiYoutube().fetch(),
                   builder: (context, AsyncSnapshot<List<Map>> snapshot) {
@@ -56,25 +56,43 @@ class _homePageState extends State<homePage> {
                         scrollDirection: Axis.horizontal,
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              Image.network(snapshot.data![index]["thumbnail"].toString(),
-                                fit: BoxFit.cover,
-                                //height: MediaQuery.of(context).size.height * 0.3,
-                                width: MediaQuery.of(context).size.width * 0.92
-                              ),
-                              /*Image.network(
-                                YoutubePlayer.getThumbnail(
-                                  videoId: (snapshot.data![index]["idVideo"]),
+                          String idVideo = snapshot.data![index]["idVideo"];
+                          return Center(
+                            child: Column(
+                              children: [
+                                /*Image.network(snapshot.data![index]["thumbnail"].toString(),
+                                  fit: BoxFit.cover,
+                                  //height: MediaQuery.of(context).size.height * 0.3,
+                                  width: MediaQuery.of(context).size.width * 0.92
+                                ),*/
+                                InkWell(
+                                  child: Image.network(
+                                    YoutubePlayer.getThumbnail(
+                                      videoId: (snapshot.data![index]["idVideo"]),
+                                      quality: ThumbnailQuality.high,
+                                    ),
+                                    fit: BoxFit.cover,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.65,
+                                  ),
+                                  onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => videoPage(
+                                              idVideo: idVideo,
+                                            )),
+                                  ),
                                 ),
-                                fit: BoxFit.cover,
-                                width:
-                                    MediaQuery.of(context).size.width * 0.8,
-                              ), */
-                              Text(
-                                snapshot.data![index]["titleVideo"],
-                              ),
-                            ],
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.65,
+                                  child: Text(
+                                    snapshot.data![index]["titleVideo"],
+                                    style: TextStyle(fontSize: 11),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         },
                       );
@@ -128,13 +146,11 @@ class _homePageState extends State<homePage> {
                           return Column(
                             children: [
                               InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CharacterPage(index: index)));
-                                },
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CharacterPage(index: index))),
                                 splashColor: Colors.white10,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
@@ -176,6 +192,17 @@ class _homePageState extends State<homePage> {
                   },
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Temporadas",
+                  style: TextStyle(fontSize: 30, color: Colors.red),
+                ),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                color: Colors.white,
+              )
             ],
           ),
         ),

@@ -13,7 +13,7 @@ class apiYoutube {
     print("object");
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      for (int i = 0; i < 2; i++) {
+      for (int i = 0; i < 9; i++) {
         await video(json["items"][i]["contentDetails"]["playlists"]
             .toString()
             .replaceAll("[", "")
@@ -39,20 +39,18 @@ class apiYoutube {
       print(json["pageInfo"]["totalResults"]);
       int x = json["pageInfo"]["totalResults"];
       for (int i = 0; i < x; i++) {
-        //dados["idVideo"] = json["items"][i]["contentDetails"]["videoId"].toString();
-        //dados["titleVideo"] = json["items"][i]["snippet"]["title"].toString();
-        print(dados);
+        String title = json["items"][i]["snippet"]["title"].toString();
+        String idVideo = json["items"][i]["contentDetails"]["videoId"].toString();
 
-        //listaIdVideo.add(dados);
-        listaInfoVideo.add(
-          {
-            "idVideo": json["items"][i]["contentDetails"]["videoId"].toString(),
-            "titleVideo": json["items"][i]["snippet"]["title"].toString(),
-            "thumbnail": json["items"][i]["snippet"]["thumbnails"]["maxres"]
-                    ["url"]
-                .toString(),
-          },
-        );
+        if (title != "Private video") {
+          listaInfoVideo.add(
+            {
+              "idVideo" : idVideo,
+              "titleVideo": title
+
+            },
+          );
+        }
       }
     }
   }
