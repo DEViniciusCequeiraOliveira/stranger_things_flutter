@@ -14,6 +14,12 @@ class TextStyleView extends StatelessWidget {
     return date.contains("nknown")
         ? const SizedBox.shrink()
         : Text(
+            date.replaceAll("[", "").replaceAll("]", ""),
+            style: TextStyle(
+              fontSize: 18,
+            ),
+            textAlign: TextAlign.center,
+            /*Text(
             date.substring(
               1,
               date.length - 1,
@@ -22,7 +28,7 @@ class TextStyleView extends StatelessWidget {
               fontSize: 18,
             ),
             textAlign: TextAlign.center,
+          );*/
           );
   }
 }
-

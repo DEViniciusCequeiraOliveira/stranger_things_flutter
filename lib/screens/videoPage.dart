@@ -36,16 +36,27 @@ class _videoPageState extends State<videoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          YoutubePlayer(
-            controller: _controller,
-            
-            progressIndicatorColor: Colors.red,
-            showVideoProgressIndicator: true,
-            liveUIColor: Colors.amber,
-          ),
-        ],
+      body: Center(
+        child: YoutubePlayer(
+          controller: _controller,
+          progressIndicatorColor: Colors.red,
+          showVideoProgressIndicator: true,
+          bottomActions: [
+            const SizedBox(width: 14.0),
+            CurrentPosition(),
+            const SizedBox(width: 8.0),
+            ProgressBar(
+              isExpanded: true,
+              colors: ProgressBarColors(
+                  backgroundColor: Colors.black,
+                  bufferedColor: Colors.white,
+                  handleColor: Colors.white,
+                  playedColor: Colors.red),
+            ),
+            RemainingDuration(),
+            const PlaybackSpeedButton(),
+          ],
+        ),
       ),
     );
   }

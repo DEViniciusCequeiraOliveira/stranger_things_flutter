@@ -6,15 +6,8 @@ import 'package:stranger_things/screens/CharacterPage.dart';
 import 'package:stranger_things/screens/videoPage.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class homePage extends StatefulWidget {
-  const homePage({
-    Key? key,
-  }) : super(key: key);
-  @override
-  State<homePage> createState() => _homePageState();
-}
+class homePage extends StatelessWidget {
 
-class _homePageState extends State<homePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,31 +53,28 @@ class _homePageState extends State<homePage> {
                           return Center(
                             child: Column(
                               children: [
-                                /*Image.network(snapshot.data![index]["thumbnail"].toString(),
-                                  fit: BoxFit.cover,
-                                  //height: MediaQuery.of(context).size.height * 0.3,
-                                  width: MediaQuery.of(context).size.width * 0.92
-                                ),*/
                                 InkWell(
                                   child: Image.network(
                                     YoutubePlayer.getThumbnail(
-                                      videoId: (snapshot.data![index]["idVideo"]),
+                                      videoId: (idVideo),
                                       quality: ThumbnailQuality.high,
                                     ),
                                     fit: BoxFit.cover,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.65,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.65,
                                   ),
                                   onTap: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => videoPage(
-                                              idVideo: idVideo,
-                                            )),
+                                      builder: (context) => videoPage(
+                                        idVideo: idVideo,
+                                      ),
+                                    ),
                                   ),
                                 ),
                                 Container(
-                                  width: MediaQuery.of(context).size.width * 0.65,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.65,
                                   child: Text(
                                     snapshot.data![index]["titleVideo"],
                                     style: TextStyle(fontSize: 11),
@@ -95,6 +85,16 @@ class _homePageState extends State<homePage> {
                             ),
                           );
                         },
+                        /*                        if (index > snapshot.data!.length) {
+                            return Container(
+                              color: Colors.white,
+                              width: 40,
+                              child: Text(
+                                "oi",
+                                style: TextStyle(color: Colors.amber),
+                              ),
+                            );
+                          } */
                       );
                     }
                     return Center(
