@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:stranger_things/models/Character.dart';
+import 'package:stranger_things/repository/apiSeasons.dart';
 import 'package:stranger_things/repository/apiStrangerThings.dart';
 import 'package:stranger_things/repository/apiYoutube.dart';
 import 'package:stranger_things/screens/CharacterPage.dart';
+import 'package:stranger_things/screens/SeasonPage.dart';
 import 'package:stranger_things/screens/videoPage.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class homePage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,7 +202,42 @@ class homePage extends StatelessWidget {
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.4,
-                color: Colors.white,
+                child: FutureBuilder(
+                  future: apiSeasons().fetch(),
+                  builder: (context, AsyncSnapshot<List<Map>> snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Column(children: [
+                              InkWell(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SeasonPage(index: index),
+                                  ),
+                                ),
+                                child: Image.network(
+                                  "https://image.tmdb.org/t/p/w500${snapshot.data![index]["poster_path"].toString()}",
+                                  fit: BoxFit.cover,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                ),
+                              ),
+                              Text(snapshot.data![index]["name"].toString())
+                            ]);
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              width: 16,
+                            );
+                          },
+                          itemCount: snapshot.data!.length);
+                    }
+                    return Text("NADA");
+                  },
+                ),
               )
             ],
           ),

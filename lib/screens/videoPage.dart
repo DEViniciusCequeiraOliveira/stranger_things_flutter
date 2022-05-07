@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stranger_things/repository/apiSeasons.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class videoPage extends StatefulWidget {
@@ -15,13 +16,17 @@ class _videoPageState extends State<videoPage> {
 
   @override
   initState() {
+    apiSeasons().fetch();
     super.initState();
     _controller = YoutubePlayerController(
+    
       initialVideoId: widget.idVideo,
       flags: YoutubePlayerFlags(
+        hideControls: true,
+        hideThumbnail: true,
         autoPlay: true,
         enableCaption: true,
-        captionLanguage: "pt",
+        captionLanguage: "pt-BR",
       ),
     );
     _controller.toggleFullScreenMode();
@@ -36,6 +41,7 @@ class _videoPageState extends State<videoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
         child: YoutubePlayer(
           controller: _controller,

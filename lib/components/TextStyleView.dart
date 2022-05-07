@@ -19,16 +19,6 @@ class TextStyleView extends StatelessWidget {
               fontSize: 18,
             ),
             textAlign: TextAlign.center,
-            /*Text(
-            date.substring(
-              1,
-              date.length - 1,
-            ),
-            style: TextStyle(
-              fontSize: 18,
-            ),
-            textAlign: TextAlign.center,
-          );*/
           );
   }
 }
