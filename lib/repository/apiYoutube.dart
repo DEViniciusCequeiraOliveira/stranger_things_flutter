@@ -15,7 +15,9 @@ class apiYoutube {
         String idVideo = json["items"][i]["id"]["videoId"].toString();
         String title = json["items"][i]["snippet"]["title"].toString();
         listaInfoVideo.add({"idVideo": idVideo, "titleVideo": title});
+        print(listaInfoVideo);
       }
+      print(listaInfoVideo);
       return listaInfoVideo;
     }
     return [];

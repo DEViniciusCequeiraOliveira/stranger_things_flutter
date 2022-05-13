@@ -1,7 +1,7 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:stranger_things/components/TextStyleView.dart';
 import 'package:stranger_things/components/TitleStyleView.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:stranger_things/repository/apiSeasons.dart';
 
 class SeasonPage extends StatelessWidget {
@@ -33,13 +33,85 @@ class SeasonPage extends StatelessWidget {
                             fit: BoxFit.cover,
                             //height: MediaQuery.of(context).size.height * 0.45,
                           ),
-                          TitleStyleView(
-                              characteristic:
-                                  contents["episodes"][i]["name"].toString()),
-                          TextStyleView(
+                          SingleChildScrollView(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                TitleStyleView(
+                                    characteristic: contents["episodes"][i]
+                                            ["name"]
+                                        .toString()),
+                                Container(
+                                  //margin: EdgeInsets.only(top: 25, bottom: 8),
+                                  padding: EdgeInsets.all(18),
+                                  height: 100,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                              "${(contents["episodes"][i]["vote_average"] / 2).toStringAsFixed(2)}"),
+                                          RatingBarIndicator(
+                                            rating: contents["episodes"][i]
+                                                    ["vote_average"] /
+                                                2,
+                                            itemBuilder: (context, index) =>
+                                                Icon(
+                                              Icons.star,
+                                              color: Colors.amber,
+                                            ),
+                                            itemSize: 18,
+                                          ),
+                                        ],
+                                      ),
+                                      VerticalDivider(
+                                        color: Colors.red,
+                                        thickness: 1.6,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text("TOTAL DE VOTOS"),
+                                          Text(
+                                              "${contents["episodes"][i]["vote_count"]}")
+                                        ],
+                                      ),
+                                      VerticalDivider(
+                                        color: Colors.red,
+                                        thickness: 1.6,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text("MINUTOS"),
+                                          Text(
+                                              "${contents["episodes"][i]["runtime"]}")
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "${contents["episodes"][i]["overview"]}",
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  //TextStyleView(characteristic: contents["episodes"][i]["overview"].toString()),
+                                ),
+                              ],
+                            ),
+                          ),
+                          /*  TextStyleView(
                               characteristic: contents["episodes"][i]
-                                      ["overview"]
-                                  .toString())
+                                  ["vote_average"]) */
                         ],
                       ),
                     );

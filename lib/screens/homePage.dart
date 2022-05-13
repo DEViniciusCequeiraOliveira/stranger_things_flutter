@@ -7,6 +7,8 @@ import 'package:stranger_things/screens/CharacterPage.dart';
 import 'package:stranger_things/screens/SeasonPage.dart';
 import 'package:stranger_things/screens/videoPage.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class homePage extends StatelessWidget {
   @override
