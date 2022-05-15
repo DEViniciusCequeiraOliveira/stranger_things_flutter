@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stranger_things/components/CharecterPageView.dart';
+import 'package:stranger_things/components/LoadingComponents.dart';
 import 'package:stranger_things/models/Character.dart';
 import 'package:stranger_things/repository/apiStrangerThings.dart';
 
@@ -36,19 +37,7 @@ class CharacterPage extends StatelessWidget {
                   );
                 }
 
-                return Center(
-                  child: Container(
-                    color: Colors.black,
-                    child: AlertDialog(
-                      backgroundColor: Colors.black,
-                      content: Container(
-                        child: Image.network(
-                            "https://giffiles.alphacoders.com/156/15671.gif"),
-                        width: 100,
-                      ),
-                    ),
-                  ),
-                );
+                return LoadingComponents();
               },
             ),
           )

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class MaxQueriesComponents extends StatelessWidget {
-  const MaxQueriesComponents({Key? key}) : super(key: key);
+class DialogComponents extends StatelessWidget {
+  const DialogComponents({Key? key, required this.title, this.subTitle}) : super(key: key);
+  final String title;
+  final String? subTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -10,11 +12,14 @@ class MaxQueriesComponents extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "CHEGAMOS AO MÁXIMO DE COTAS DA API",
+            title,
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
-          Text("volte amanhã por favor!! :)", textAlign: TextAlign.center,)
+          Text(
+            subTitle ?? "",
+            textAlign: TextAlign.center,
+          ) 
         ],
       ),
     );

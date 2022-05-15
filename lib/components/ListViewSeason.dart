@@ -21,6 +21,7 @@ class ListViewSeason extends StatelessWidget {
                   builder: (context) => SeasonPage(index: index),
                 ),
               ),
+              splashColor: Colors.white10,
               child: Image.network(
                 "https://image.tmdb.org/t/p/w500${snapshot.data![index]["poster_path"].toString()}",
                 fit: BoxFit.cover,

@@ -8,9 +8,13 @@ class TitleStyleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final date = characteristic.toString();
-    return Text(
-      date,
-      style: TextStyle(fontSize: 36, color: Colors.red),
+    return Column(
+      children: [
+        Text(
+          date,
+          style: TextStyle(fontSize: 36, color: Colors.red), 
+        ),
+      ],
     );
   }
 }

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:stranger_things/components/DialogError.dart';
 import 'package:stranger_things/components/ListViewCharacter.dart';
 import 'package:stranger_things/components/ListViewSeason.dart';
 import 'package:stranger_things/components/ListViewYoutube.dart';
 import 'package:stranger_things/components/LoadingComponents.dart';
-import 'package:stranger_things/components/MaxQueriesComponents.dart';
+import 'package:stranger_things/components/DialogComponents.dart';
 import 'package:stranger_things/components/TitleSection.dart';
 import 'package:stranger_things/models/Character.dart';
 import 'package:stranger_things/repository/apiSeasons.dart';
 import 'package:stranger_things/repository/apiStrangerThings.dart';
 import 'package:stranger_things/repository/apiYoutube.dart';
-
 
 class homePage extends StatelessWidget {
   @override
@@ -36,19 +34,26 @@ class homePage extends StatelessWidget {
                   future: apiYoutube().fetch(),
                   builder: (context, AsyncSnapshot<List<Map>> snapshot) {
                     if (snapshot.hasError) {
-                      return DialogError();
+                      return DialogComponents(title: "Erro");
                     }
                     if (snapshot.hasData) {
                       if (snapshot.data!.isEmpty) {
-                        return MaxQueriesComponents();
+                        return const DialogComponents(
+                          title: "Resultado vazio :(",
+                        );
+                      } else if (snapshot.data![0]["erro"] == "403") {
+                        return const DialogComponents(
+                          title: "CHEGAMOS AO MÁXIMO DE COTAS DA API",
+                          subTitle: "volte amanhã por favor!!! :)",
+                        );
                       }
                       return ListViewYoutube(snapshot: snapshot);
                     }
-                    return LoadingComponents();
+                    return const LoadingComponents();
                   },
                 ),
               ),
-              TitleSection(titleName: "Personagens"),
+              const TitleSection(titleName: "Personagens"),
               Container(
                 height: size.height * 0.4,
                 child: FutureBuilder(
@@ -56,7 +61,7 @@ class homePage extends StatelessWidget {
                   builder: (BuildContext context,
                       AsyncSnapshot<List<Character>> snapshot) {
                     if (snapshot.hasError) {
-                      return DialogError();
+                      return DialogComponents(title: "Erro");
                     }
 
                     if (snapshot.hasData) {
@@ -66,14 +71,14 @@ class homePage extends StatelessWidget {
                   },
                 ),
               ),
-              TitleSection(titleName: "Temporadas"),
+              const TitleSection(titleName: "Temporadas"),
               Container(
                 height: size.height * 0.4,
                 child: FutureBuilder(
                   future: apiSeasons().fetch(),
                   builder: (context, AsyncSnapshot<List<Map>> snapshot) {
                     if (snapshot.hasError) {
-                      return DialogError();
+                      return DialogComponents(title: "Erro");
                     }
                     if (snapshot.hasData) {
                       return ListViewSeason(snapshot: snapshot);

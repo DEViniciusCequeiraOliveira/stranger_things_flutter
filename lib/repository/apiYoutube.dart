@@ -18,6 +18,10 @@ class apiYoutube {
       }
 
       return listaInfoVideo;
+    } else if (response.statusCode == 403) {
+      return [
+        {"erro": "403"}
+      ];
     }
     return [];
   }
