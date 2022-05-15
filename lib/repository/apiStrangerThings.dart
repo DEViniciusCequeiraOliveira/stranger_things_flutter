@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:stranger_things/models/Character.dart';
 import 'package:http/http.dart' as http;
 

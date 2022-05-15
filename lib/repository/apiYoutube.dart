@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class apiYoutube {
   List<Map<String, String>> listaInfoVideo = [];
 
-  Future<List<Map>> fetch() async {
+  Future<List<Map<String, String>>> fetch() async {
     var url = Uri.parse(
         "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UChmpTxQ0Gp8KEJKsqzeg9Lg&maxResults=7&key=${keyYoutube.apiYoutube}");
     var response = await http.get(url);
@@ -15,9 +15,8 @@ class apiYoutube {
         String idVideo = json["items"][i]["id"]["videoId"].toString();
         String title = json["items"][i]["snippet"]["title"].toString();
         listaInfoVideo.add({"idVideo": idVideo, "titleVideo": title});
-        print(listaInfoVideo);
       }
-      print(listaInfoVideo);
+
       return listaInfoVideo;
     }
     return [];

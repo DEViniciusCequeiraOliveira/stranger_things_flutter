@@ -9,6 +9,8 @@ class SeasonPage extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Column(children: [
         Container(
@@ -26,75 +28,92 @@ class SeasonPage extends StatelessWidget {
                   itemBuilder: (context, i) {
                     return Container(
                       color: Colors.black,
-                      child: Column(
-                        children: [
+                      child: SingleChildScrollView(
+                        child: Column(children: [
                           Image.network(
                             "https://image.tmdb.org/t/p/w500${contents["episodes"][i]["still_path"].toString()}",
                             fit: BoxFit.cover,
                             //height: MediaQuery.of(context).size.height * 0.45,
                           ),
-                          SingleChildScrollView(
+                          Container(
                             padding: const EdgeInsets.all(10),
                             child: Column(
+                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 TitleStyleView(
                                     characteristic: contents["episodes"][i]
                                             ["name"]
                                         .toString()),
                                 Container(
-                                  //margin: EdgeInsets.only(top: 25, bottom: 8),
                                   padding: EdgeInsets.all(18),
-                                  height: 100,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                              "${(contents["episodes"][i]["vote_average"] / 2).toStringAsFixed(2)}"),
-                                          RatingBarIndicator(
-                                            rating: contents["episodes"][i]
-                                                    ["vote_average"] /
-                                                2,
-                                            itemBuilder: (context, index) =>
-                                                Icon(
-                                              Icons.star,
-                                              color: Colors.amber,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitWidth,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "${(contents["episodes"][i]["vote_average"] / 2).toStringAsFixed(2)}",
+                                              style: TextStyle(fontSize: 18),
                                             ),
-                                            itemSize: 18,
+                                            RatingBarIndicator(
+                                              rating: contents["episodes"][i]
+                                                      ["vote_average"] /
+                                                  2,
+                                              itemBuilder: (context, index) =>
+                                                  Icon(
+                                                Icons.star,
+                                                color: Colors.amber,
+                                              ),
+                                              unratedColor: Colors.white,
+                                              itemSize: 18,
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 65,
+                                          width: 30,
+                                          child: VerticalDivider(
+                                            color: Colors.red,
+                                            thickness: 3,
                                           ),
-                                        ],
-                                      ),
-                                      VerticalDivider(
-                                        color: Colors.red,
-                                        thickness: 1.6,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text("TOTAL DE VOTOS"),
-                                          Text(
-                                              "${contents["episodes"][i]["vote_count"]}")
-                                        ],
-                                      ),
-                                      VerticalDivider(
-                                        color: Colors.red,
-                                        thickness: 1.6,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text("MINUTOS"),
-                                          Text(
-                                              "${contents["episodes"][i]["runtime"]}")
-                                        ],
-                                      ),
-                                    ],
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text("TOTAL DE VOTOS",
+                                                style: TextStyle(fontSize: 18)),
+                                            Text(
+                                                "${contents["episodes"][i]["vote_count"]}")
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 65,
+                                          width: 30,
+                                          child: VerticalDivider(
+                                            color: Colors.red,
+                                            thickness: 3,
+                                          ),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text("MINUTOS",
+                                                style: TextStyle(fontSize: 18)),
+                                            Text(
+                                                "${contents["episodes"][i]["runtime"]}")
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 Container(
@@ -109,10 +128,10 @@ class SeasonPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          /*  TextStyleView(
-                              characteristic: contents["episodes"][i]
-                                  ["vote_average"]) */
-                        ],
+                        ]),
+                        /*  TextStyleView(
+                                characteristic: contents["episodes"][i]
+                                    ["vote_average"]) */
                       ),
                     );
                   },
