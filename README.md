@@ -25,6 +25,6 @@ Para mais instruções sobre a configuração do ambiente, recomendamos a leitur
 
 ## ⭐ Créditos
 
-Api Stranger Things: https://github.com/api-tutorial/stranger-things-api
-Api Youtube: https://developers.google.com/youtube/v3
-Template de readme: https://github.com/alura-cursos/flutter-nuvigator/blob/start/README.md
+- Api Stranger Things: https://github.com/api-tutorial/stranger-things-api
+- Api Youtube: https://developers.google.com/youtube/v3
+- Template de readme: https://github.com/alura-cursos/flutter-nuvigator/blob/start/README.md
