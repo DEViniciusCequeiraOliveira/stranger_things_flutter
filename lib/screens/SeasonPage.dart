@@ -1,8 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:stranger_things/components/LoadingComponents.dart';
+import 'package:stranger_things/components/TextStyleSimpleView.dart';
+import 'package:stranger_things/components/TitleSection.dart';
 import 'package:stranger_things/components/TitleStyleView.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:stranger_things/models/Seasons.dart';
 import 'package:stranger_things/repository/apiSeasons.dart';
 
 class SeasonPage extends StatelessWidget {
@@ -18,28 +21,27 @@ class SeasonPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: FutureBuilder(
             future: apiSeasons().fetch(),
-            builder:
-                (context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+            builder: (context, AsyncSnapshot<List<Seasons>> snapshot) {
               if (snapshot.hasData) {
                 final contents = snapshot.data![index];
 
+                //final contentsCharacter = snapshot.data![index]["episodes"][""];
+
                 return PageView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: contents.length,
+                  itemCount: contents.episodes!.length,
                   itemBuilder: (context, i) {
                     return Container(
                       color: Colors.black,
                       child: CustomScrollView(
                         slivers: [
                           SliverAppBar(
-
                             backgroundColor: Colors.black,
-                            expandedHeight:  size.height * 0.32,
+                            expandedHeight: size.height * 0.32,
                             pinned: false,
                             flexibleSpace: FlexibleSpaceBar(
-
                               background: Image.network(
-                                "https://image.tmdb.org/t/p/w500${contents["episodes"][i]["still_path"].toString()}",
+                                "https://image.tmdb.org/t/p/w500${contents.episodes![i].stillPath}",
                                 fit: BoxFit.cover,
                                 loadingBuilder:
                                     (context, child, loadingProgress) {
@@ -47,7 +49,6 @@ class SeasonPage extends StatelessWidget {
                                   return Center(
                                       child: Image.asset("assets/splash.gif"));
                                 },
-                                //height: MediaQuery.of(context).size.height * 0.45,
                               ),
                             ),
                           ),
@@ -55,11 +56,10 @@ class SeasonPage extends StatelessWidget {
                             child: Container(
                               padding: const EdgeInsets.all(10),
                               child: Column(
-                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TitleStyleView(
-                                      characteristic: contents["episodes"][i]
-                                              ["name"]
+                                      characteristic: contents.episodes![i].name
                                           .toString()),
                                   Container(
                                     padding: EdgeInsets.all(18),
@@ -76,16 +76,15 @@ class SeasonPage extends StatelessWidget {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                "${(contents["episodes"][i]["vote_average"] / 2).toStringAsFixed(2)}",
-                                                style:
-                                                    TextStyle(fontSize: 18),
+                                                "${(contents.episodes![i].voteAverage! / 2).toStringAsFixed(2)}",
+                                                style: TextStyle(fontSize: 18),
                                               ),
                                               RatingBarIndicator(
-                                                rating: contents["episodes"]
-                                                        [i]["vote_average"] /
+                                                rating: contents.episodes![i]
+                                                        .voteAverage! /
                                                     2,
-                                                itemBuilder:
-                                                    (context, index) => Icon(
+                                                itemBuilder: (context, index) =>
+                                                    Icon(
                                                   Icons.star,
                                                   color: Colors.amber,
                                                 ),
@@ -107,10 +106,10 @@ class SeasonPage extends StatelessWidget {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text("TOTAL DE VOTOS",
-                                                  style: TextStyle(
-                                                      fontSize: 18)),
+                                                  style:
+                                                      TextStyle(fontSize: 18)),
                                               Text(
-                                                  "${contents["episodes"][i]["vote_count"]}")
+                                                  "${contents.episodes![i].voteCount}")
                                             ],
                                           ),
                                           const SizedBox(
@@ -126,10 +125,10 @@ class SeasonPage extends StatelessWidget {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text("MINUTOS",
-                                                  style: TextStyle(
-                                                      fontSize: 18)),
+                                                  style:
+                                                      TextStyle(fontSize: 18)),
                                               Text(
-                                                  "${contents["episodes"][i]["runtime"]}")
+                                                  "${contents.episodes![i].runtime}")
                                             ],
                                           ),
                                         ],
@@ -137,13 +136,49 @@ class SeasonPage extends StatelessWidget {
                                     ),
                                   ),
                                   Container(
-                                    alignment: Alignment.center,
                                     child: Text(
-                                      "${contents["episodes"][i]["overview"]}",
+                                      "${contents.episodes![i].overview}",
                                       textAlign: TextAlign.justify,
                                       style: TextStyle(fontSize: 18),
                                     ),
-                                    //TextStyleView(characteristic: contents["episodes"][i]["overview"].toString()),
+                                  ),
+                                  TitleSection(titleName: "Atores"),
+                                  Container(
+                                    height: size.height * 0.5,
+                                    child: ListView.separated(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: contents
+                                          .episodes![i].guestStars!.length,
+                                      itemBuilder: (context, ind) {
+                                        final contentsPerson = contents
+                                            .episodes![i].guestStars![ind];
+                                        return Column(
+                                          children: [
+                                            Image.network(
+                                              contentsPerson.profilePath != null
+                                                  ? "https://image.tmdb.org/t/p/w500${contentsPerson.profilePath}"
+                                                  : "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg",
+                                              height: size.height *0.4,
+                                              fit: BoxFit.cover,
+                                            ),
+                                            Text(
+                                              contentsPerson.character
+                                                  .toString(),
+                                              style: TextStyle(
+                                                fontSize: 20, color: Colors.red
+                                              ),
+                                              
+                                            ),
+                                            TextStyleSimpleView(characteristic: contentsPerson.name)
+                                          ],
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return SizedBox(
+                                          width: 10,
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),

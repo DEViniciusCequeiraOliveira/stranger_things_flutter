@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SubTitleStyleView extends StatelessWidget {
-  const SubTitleStyleView({Key? key, required this.characteristic}) : super(key: key);
+  const SubTitleStyleView({Key? key, required this.characteristic})
+      : super(key: key);
   final characteristic;
 
   @override
@@ -9,12 +10,9 @@ class SubTitleStyleView extends StatelessWidget {
     final date = characteristic.toString();
 
     return date.contains("nknown")
-        ? SizedBox.shrink()
+        ? const SizedBox.shrink()
         : Text(
-            date.substring(
-              1,
-              date.length - 1,
-            ),
+            date.replaceAll("[", "").replaceAll("]", ""),
             style: TextStyle(fontSize: 18),
           );
   }

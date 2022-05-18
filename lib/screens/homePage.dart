@@ -6,6 +6,7 @@ import 'package:stranger_things/components/LoadingComponents.dart';
 import 'package:stranger_things/components/DialogComponents.dart';
 import 'package:stranger_things/components/TitleSection.dart';
 import 'package:stranger_things/models/Character.dart';
+import 'package:stranger_things/models/Seasons.dart';
 import 'package:stranger_things/repository/apiSeasons.dart';
 import 'package:stranger_things/repository/apiStrangerThings.dart';
 import 'package:stranger_things/repository/apiYoutube.dart';
@@ -76,7 +77,7 @@ class homePage extends StatelessWidget {
                 height: size.height * 0.4,
                 child: FutureBuilder(
                   future: apiSeasons().fetch(),
-                  builder: (context, AsyncSnapshot<List<Map>> snapshot) {
+                  builder: (context, AsyncSnapshot<List<Seasons>> snapshot) {
                     if (snapshot.hasError) {
                       return DialogComponents(title: "Erro");
                     }
