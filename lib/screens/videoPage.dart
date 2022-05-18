@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stranger_things/repository/apiSeasons.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class videoPage extends StatefulWidget {
@@ -16,10 +16,10 @@ class _videoPageState extends State<videoPage> {
 
   @override
   initState() {
-    apiSeasons().fetch();
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
     _controller = YoutubePlayerController(
-    
       initialVideoId: widget.idVideo,
       flags: YoutubePlayerFlags(
         hideControls: true,
@@ -36,6 +36,8 @@ class _videoPageState extends State<videoPage> {
   void dispose() {
     super.dispose();
     _controller.toggleFullScreenMode();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: SystemUiOverlay.values);
   }
 
   @override

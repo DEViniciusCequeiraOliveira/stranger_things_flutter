@@ -9,8 +9,6 @@ class ListViewSeason extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var x = snapshot.data![0];
-    print(x);
     return ListView.separated(
       itemCount: snapshot.data!.length,
       scrollDirection: Axis.horizontal,

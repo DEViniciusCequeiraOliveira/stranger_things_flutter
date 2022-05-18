@@ -154,12 +154,15 @@ class SeasonPage extends StatelessWidget {
                                             .episodes![i].guestStars![ind];
                                         return Column(
                                           children: [
-                                            Image.network(
-                                              contentsPerson.profilePath != null
-                                                  ? "https://image.tmdb.org/t/p/w500${contentsPerson.profilePath}"
-                                                  : "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg",
-                                              height: size.height *0.4,
-                                              fit: BoxFit.cover,
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.circular(8),
+                                              child: Image.network(
+                                                contentsPerson.profilePath != null
+                                                    ? "https://image.tmdb.org/t/p/w500${contentsPerson.profilePath}"
+                                                    : "https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg",
+                                                height: size.height *0.4,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                             Text(
                                               contentsPerson.character
@@ -175,7 +178,7 @@ class SeasonPage extends StatelessWidget {
                                       },
                                       separatorBuilder: (context, index) {
                                         return SizedBox(
-                                          width: 10,
+                                          width: 16,
                                         );
                                       },
                                     ),

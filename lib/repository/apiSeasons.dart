@@ -5,7 +5,7 @@ import 'package:stranger_things/constants/keyTMDA.dart';
 import 'package:stranger_things/models/Seasons.dart';
 
 class apiSeasons {
-  List seasons = [1, 2, 3];
+  List seasons = [1, 2, 3, 4];
   List<Seasons> dateSeasons = [];
 
   Future<List<Seasons>> fetch() async {
