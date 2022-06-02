@@ -7,11 +7,11 @@ class apiYoutube {
 
   Future<List<Map<String, String>>> fetch() async {
     var url = Uri.parse(
-        "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UChmpTxQ0Gp8KEJKsqzeg9Lg&maxResults=7&key=${keyYoutube.apiYoutube}");
+        "https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=UChmpTxQ0Gp8KEJKsqzeg9Lg&maxResults=185&key=${keyYoutube.apiYoutube}");
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      for (int i = 0; i < 7; i++) {
+      for (int i = 0; i < 50; i++) {
         String idVideo = json["items"][i]["id"]["videoId"].toString();
         String title = json["items"][i]["snippet"]["title"].toString();
         listaInfoVideo.add({"idVideo": idVideo, "titleVideo": title});
