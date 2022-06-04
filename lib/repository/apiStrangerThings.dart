@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class apiStrangerThings {
   Future<List<Character>> fetch() async {
     var url =
-        Uri.parse('http://stranger-things-api.herokuapp.com/api/v1/characters');
+        Uri.parse('http://stranger-things-api.herokuapp.com/api/v1/characters/random?count=108');
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
